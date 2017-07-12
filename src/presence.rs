@@ -6,7 +6,9 @@ event! {
     /// Informs the client of a user's presence state change.
     pub struct PresenceEvent(PresenceEventContent) {
         /// The unique identifier for the event.
-        pub event_id: EventId
+        pub event_id: Option<EventId>, // FIXME: Should not be optional, but synapse leaves it out
+        /// [synapse implementation] The user associated with this event
+        pub sender: Option<UserId> // FIXME
     }
 }
 
@@ -33,7 +35,7 @@ pub struct PresenceEventContent {
     pub presence: PresenceState,
 
     /// The unique identifier for the user associated with this event.
-    pub user_id: UserId,
+    pub user_id: Option<UserId>, // FIXME: Should not be optional, but synapse leaves it out
 }
 
 /// A description of a user's connectivity and availability for chat.
