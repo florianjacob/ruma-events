@@ -91,7 +91,7 @@ macro_rules! room_event {
             pub event_type: $crate::EventType,
 
             /// The unique identifier for the room associated with this event.
-            pub room_id: ::ruma_identifiers::RoomId,
+            pub room_id: Option<::ruma_identifiers::RoomId>,
 
             /// Additional key-value pairs not signed by the homeserver.
             #[serde(skip_serializing_if="Option::is_none")]
@@ -120,8 +120,8 @@ macro_rules! impl_room_event {
                 &self.event_id
             }
 
-            fn room_id(&self) -> &::ruma_identifiers::RoomId {
-                &self.room_id
+            fn room_id(&self) -> Option<&::ruma_identifiers::RoomId> {
+                self.room_id.as_ref()
             }
 
             fn unsigned(&self) -> Option<&::serde_json::Value> {
@@ -163,7 +163,7 @@ macro_rules! state_event {
             pub prev_content: Option<$content_type>,
 
             /// The unique identifier for the room associated with this event.
-            pub room_id: ::ruma_identifiers::RoomId,
+            pub room_id: Option<::ruma_identifiers::RoomId>,
 
             /// A key that determines which piece of room state the event represents.
             pub state_key: String,

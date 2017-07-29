@@ -206,7 +206,7 @@ pub trait RoomEvent: Event {
     fn event_id(&self) -> &EventId;
 
     /// The unique identifier for the room associated with this event.
-    fn room_id(&self) -> &RoomId;
+    fn room_id(&self) -> Option<&RoomId>;
 
     /// Additional key-value pairs not signed by the homeserver.
     fn unsigned(&self) -> Option<&Value>;
