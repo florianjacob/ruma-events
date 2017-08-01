@@ -8,7 +8,7 @@ event! {
     /// Informs the client of new receipts.
     pub struct ReceiptEvent(ReceiptEventContent) {
         /// The unique identifier for the room associated with this event.
-        pub room_id: RoomId
+        pub room_id: Option<RoomId>
     }
 }
 
