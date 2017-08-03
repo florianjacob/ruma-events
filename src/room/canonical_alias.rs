@@ -11,5 +11,5 @@ state_event! {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct CanonicalAliasEventContent {
     /// The canonical alias.
-    pub alias: RoomAliasId,
+    pub alias: Option<RoomAliasId>,
 }

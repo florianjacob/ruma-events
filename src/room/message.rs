@@ -73,6 +73,9 @@ pub enum MessageEventContent {
 
     /// A video message.
     Video(VideoMessageEventContent),
+
+    /// A redacted message...?
+    Unknown(Value),
 }
 
 /// The payload of an audio message.
@@ -266,6 +269,7 @@ impl Serialize for MessageEventContent {
             MessageEventContent::Notice(ref content) => content.serialize(serializer),
             MessageEventContent::Text(ref content) => content.serialize(serializer),
             MessageEventContent::Video(ref content) => content.serialize(serializer),
+            MessageEventContent::Unknown(_) => unimplemented!(),
         }
     }
 }
@@ -276,7 +280,7 @@ impl<'de> Deserialize<'de> for MessageEventContent {
 
         let message_type_value = match value.get("msgtype") {
             Some(value) => value.clone(),
-            None => return Err(D::Error::missing_field("msgtype")),
+            None => return Ok(MessageEventContent::Unknown(value.clone())),
         };
 
         let message_type = match from_value::<MessageType>(message_type_value.clone()) {
